@@ -25,7 +25,7 @@
 14. [Key Learnings](#14-key-learnings)  
 15. [Conclusion](#15-conclusion)  
 
-----
+---
 
 # 1. Project Overview
 
@@ -111,15 +111,6 @@ terraform plan
 terraform apply -auto-approve
 ```
 
-This provisions:
-
-• VPC  
-• Subnets  
-• IAM roles  
-• EKS cluster  
-• Node groups  
-• Add-ons  
-
 ---
 
 # 5. EKS Cluster Access Configuration
@@ -139,30 +130,7 @@ kubectl get nodes
 
 ---
 
-# 6. Verify Cluster Add-ons
-
-Autoscaler:
-
-```bash
-kubectl get pods -n kube-system
-
-kubectl logs -f \
--n kube-system \
--l app=cluster-autoscaler
-```
-
-Load Balancer Controller:
-
-```bash
-kubectl logs -f -n kube-system \
--l app.kubernetes.io/name=aws-load-balancer-controller
-```
-
----
-
-# 7. Docker Image Build & Push
-
-Login to ECR Public:
+# 6. Docker Image Build & Push
 
 ```bash
 aws ecr-public get-login-password --region us-east-1 \
@@ -172,45 +140,16 @@ aws ecr-public get-login-password --region us-east-1 \
 
 ---
 
-## Build Frontend
-
-```bash
-docker build -t workshop-frontend:v1 .
-
-docker tag workshop-frontend:v1 \
-public.ecr.aws/w8u5e4v2/workshop-frontend:v1
-
-docker push public.ecr.aws/w8u5e4v2/workshop-frontend:v1
-```
-
----
-
-## Build Backend
-
-```bash
-docker build -t workshop-backend:v1 .
-
-docker tag workshop-backend:v1 \
-public.ecr.aws/w8u5e4v2/workshop-backend:v1
-
-docker push public.ecr.aws/w8u5e4v2/workshop-backend:v1
-```
-
----
-
-# 8. Kubernetes Namespace Setup
+# 7. Kubernetes Namespace Setup
 
 ```bash
 kubectl create ns workshop
-
-kubectl config set-context \
---current \
---namespace workshop
+kubectl config set-context --current --namespace workshop
 ```
 
 ---
 
-# 9. MongoDB Database Deployment
+# 8. MongoDB Database Deployment
 
 ```bash
 cd k8s_manifests/mongo_v1
@@ -222,7 +161,7 @@ kubectl apply -f service.yaml
 
 ---
 
-# 10. Backend API Deployment
+# 9. Backend API Deployment
 
 ```bash
 kubectl apply -f backend-deployment.yaml
@@ -231,7 +170,7 @@ kubectl apply -f backend-service.yaml
 
 ---
 
-# 11. Frontend Deployment
+# 10. Frontend Deployment
 
 ```bash
 kubectl apply -f frontend-deployment.yaml
@@ -240,21 +179,16 @@ kubectl apply -f frontend-service.yaml
 
 ---
 
-# 12. Load Balancer Exposure
+# 11. Load Balancer Exposure
 
 ```bash
 kubectl apply -f full_stack_lb.yaml
-```
-
-Retrieve URL:
-
-```bash
 kubectl get svc
 ```
 
 ---
 
-# 13. Monitoring & Observability
+# 12. Monitoring & Observability
 
 Grafana Credentials:
 
@@ -263,29 +197,17 @@ Username: admin
 Password: prom-operator
 ```
 
-Import Dashboard:
+Dashboard ID:
 
 ```
-ID: 1860
+1860
 ```
-
-Explore dashboards:
-
-https://grafana.com/grafana/dashboards/
 
 ---
 
-# 14. Challenges Faced & Fixes
+# 13. Challenges Faced & Fixes
 
-## Challenge 1 — EKS Access Denied
-
-Error:
-
-```
-You must be logged in to the server
-```
-
-Fix:
+### EKS Access Denied
 
 ```bash
 aws eks update-kubeconfig \
@@ -293,89 +215,34 @@ aws eks update-kubeconfig \
 --region us-west-2
 ```
 
----
-
-## Challenge 2 — Pods Stuck in Pending
-
-Cause:
-
-Insufficient node capacity.
-
-Fix:
+### Pods Pending
 
 Enabled Cluster Autoscaler.
 
----
+### LoadBalancer Pending
 
-## Challenge 3 — LoadBalancer EXTERNAL-IP Pending
+Installed AWS Load Balancer Controller.
 
-Cause:
+### ImagePullBackOff
 
-AWS Load Balancer Controller missing.
-
-Fix:
-
-Installed via Helm/Terraform.
+Rebuilt and pushed images.
 
 ---
 
-## Challenge 4 — MongoDB Connection Failure
-
-Fix:
-
-• Verified secrets  
-• Checked service DNS  
-• Confirmed port 27017 exposure  
-
----
-
-## Challenge 5 — ImagePullBackOff
-
-Fix:
-
-Rebuilt and pushed Docker images to ECR.
-
----
-
-## Challenge 6 — Autoscaler Not Scaling
-
-Fix:
-
-Attached IAM autoscaler policy.
-
----
-
-## Challenge 7 — Terraform Dependency Errors
-
-Fix:
-
-Refactored resource dependencies.
-
----
-
-# 15. Key Learnings
+# 14. Key Learnings
 
 ```
-• Terraform enables reproducible infrastructure provisioning
-• Kubernetes orchestrates containerized microservices
-• IAM roles are critical for EKS add-ons
-• Load balancer controllers expose services externally
-• Monitoring improves production reliability
+• Terraform automates infrastructure
+• Kubernetes orchestrates containers
+• IAM roles are critical
+• Load balancers expose services
+• Monitoring ensures reliability
 ```
 
 ---
 
-# 16. Conclusion
+# 15. Conclusion
 
-This project successfully automated deployment of a scalable three-tier application on AWS EKS using Terraform and Kubernetes.
-
-It demonstrates:
-
-• Infrastructure-as-Code  
-• Container orchestration  
-• Load balancing  
-• Monitoring integration  
-• Production-grade DevOps practices  
+This project automated deployment of a scalable three-tier application on AWS EKS using Terraform and Kubernetes, demonstrating production-grade DevOps practices.
 
 ---
-
