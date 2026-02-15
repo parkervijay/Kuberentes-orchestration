@@ -9,23 +9,23 @@
 
 # Table of Contents
 
-1. Project Overview  
-2. Architecture Diagram  
-3. Prerequisites & Tool Installation  
-4. Infrastructure Provisioning using Terraform  
-5. EKS Cluster Access Configuration  
-6. Docker Image Build & Push  
-7. Kubernetes Namespace Setup  
-8. MongoDB Database Deployment  
-9. Backend API Deployment  
-10. Frontend Deployment  
-11. Load Balancer Exposure  
-12. Monitoring & Observability  
-13. Challenges Faced & Fixes  
-14. Key Learnings  
-15. Conclusion  
+1. [Project Overview](#1-project-overview)  
+2. [Architecture Diagram](#2-architecture-diagram)  
+3. [Prerequisites & Tool Installation](#3-prerequisites--tool-installation)  
+4. [Infrastructure Provisioning using Terraform](#4-infrastructure-provisioning-using-terraform)  
+5. [EKS Cluster Access Configuration](#5-eks-cluster-access-configuration)  
+6. [Docker Image Build & Push](#6-docker-image-build--push)  
+7. [Kubernetes Namespace Setup](#7-kubernetes-namespace-setup)  
+8. [MongoDB Database Deployment](#8-mongodb-database-deployment)  
+9. [Backend API Deployment](#9-backend-api-deployment)  
+10. [Frontend Deployment](#10-frontend-deployment)  
+11. [Load Balancer Exposure](#11-load-balancer-exposure)  
+12. [Monitoring & Observability](#12-monitoring--observability)  
+13. [Challenges Faced & Fixes](#13-challenges-faced--fixes)  
+14. [Key Learnings](#14-key-learnings)  
+15. [Conclusion](#15-conclusion)  
 
----
+----
 
 # 1. Project Overview
 
@@ -378,3 +378,4 @@ It demonstrates:
 • Production-grade DevOps practices  
 
 ---
+
