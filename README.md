@@ -207,7 +207,15 @@ Dashboard ID:
 
 # 13. Challenges Faced & Fixes
 
-### EKS Access Denied
+## Challenge 1 — EKS Access Denied
+
+Error:
+
+```
+You must be logged in to the server
+```
+
+Fix:
 
 ```bash
 aws eks update-kubeconfig \
@@ -215,34 +223,89 @@ aws eks update-kubeconfig \
 --region us-west-2
 ```
 
-### Pods Pending
+---
+
+## Challenge 2 — Pods Stuck in Pending
+
+Cause:
+
+Insufficient node capacity.
+
+Fix:
 
 Enabled Cluster Autoscaler.
 
-### LoadBalancer Pending
+---
 
-Installed AWS Load Balancer Controller.
+## Challenge 3 — LoadBalancer EXTERNAL-IP Pending
 
-### ImagePullBackOff
+Cause:
 
-Rebuilt and pushed images.
+AWS Load Balancer Controller missing.
+
+Fix:
+
+Installed via Helm/Terraform.
 
 ---
 
+## Challenge 4 — MongoDB Connection Failure
+
+Fix:
+
+• Verified secrets  
+• Checked service DNS  
+• Confirmed port 27017 exposure  
+
+---
+
+## Challenge 5 — ImagePullBackOff
+
+Fix:
+
+Rebuilt and pushed Docker images to ECR.
+
+---
+
+## Challenge 6 — Autoscaler Not Scaling
+
+Fix:
+
+Attached IAM autoscaler policy.
+
+---
+
+## Challenge 7 — Terraform Dependency Errors
+
+Fix:
+
+Refactored resource dependencies.
+
+---
 # 14. Key Learnings
 
 ```
-• Terraform automates infrastructure
-• Kubernetes orchestrates containers
-• IAM roles are critical
-• Load balancers expose services
-• Monitoring ensures reliability
+• Terraform enables reproducible infrastructure provisioning
+• Kubernetes orchestrates containerized microservices
+• IAM roles are critical for EKS add-ons
+• Load balancer controllers expose services externally
+• Monitoring improves production reliability
 ```
+
 
 ---
 
-# 15. Conclusion
+# 16. Conclusion
 
-This project automated deployment of a scalable three-tier application on AWS EKS using Terraform and Kubernetes, demonstrating production-grade DevOps practices.
+This project successfully automated deployment of a scalable three-tier application on AWS EKS using Terraform and Kubernetes.
+
+It demonstrates:
+```
+• Infrastructure-as-Code  
+• Container orchestration  
+• Load balancing  
+• Monitoring integration  
+• Production-grade DevOps practices
+```
 
 ---
